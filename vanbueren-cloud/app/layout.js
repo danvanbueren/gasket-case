@@ -6,18 +6,20 @@ import EmotionRegistry from './EmotionRegistry';
 import Providers from './providers';
 
 export const metadata = {
-  title: 'Vanbueren Cloud - Dashboard',
-  description: 'Enterprise Cloud Management Console',
+    title: 'Van Bueren - Cloud Dashboard',
+    description: 'Cloud Dashboard',
 };
 
 export default function RootLayout({ children }) {
-  return (
-    <html lang="en">
-      <body>
-        <EmotionRegistry>
-          <Providers>{children}</Providers>
-        </EmotionRegistry>
-      </body>
-    </html>
-  );
+    return (
+        <html lang="en">
+            <body>
+                <EmotionRegistry>
+                    <Providers>
+                        {children}
+                    </Providers>
+                </EmotionRegistry>
+            </body>
+        </html>
+    );
 }
