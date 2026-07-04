@@ -12,7 +12,8 @@ import {
 } from '@mui/material'
 import CloudIcon from '@mui/icons-material/Cloud'
 import LaunchIcon from '@mui/icons-material/Launch'
-import DashboardIcon from '@mui/icons-material/Dashboard'
+import HomeIcon from '@mui/icons-material/Home'
+import CheckIcon from '@mui/icons-material/Check'
 import FlightIcon from '@mui/icons-material/Flight'
 import MusicNoteIcon from '@mui/icons-material/MusicNote'
 import ConstructionIcon from '@mui/icons-material/Construction'
@@ -129,13 +130,13 @@ export default function Home() {
                       Dashboard
                     </Typography>
                     <Button
-                      variant="outlined"
+                      variant="contained"
                       href="/"
                       startIcon={
-                        <DashboardIcon />
+                        <HomeIcon />
                       }
                       endIcon={
-                        <LaunchIcon />
+                        <CheckIcon />
                       }
                       sx={{
                         justifyContent: 'flex-start',
@@ -143,19 +144,18 @@ export default function Home() {
                         width: '100%',
                         py: 1.5,
                         px: 2,
-                        borderColor: 'divider',
-                        color: 'text.primary',
-                        fontWeight: 500,
+                        color: 'primary.contrastText',
+                        fontWeight: 600,
+                        backgroundColor: 'primary.main',
                         '&:hover': {
-                          borderColor: 'primary.main',
-                          backgroundColor: 'rgba(144, 202, 249, 0.08)',
+                          backgroundColor: 'primary.dark',
                         },
                         '& .MuiButton-startIcon': {
-                          color: 'primary.main',
+                          color: 'inherit',
                           mr: 1.5,
                         },
                         '& .MuiButton-endIcon': {
-                          color: 'text.secondary',
+                          color: 'inherit',
                           marginLeft: 'auto',
                         },
                       }}
