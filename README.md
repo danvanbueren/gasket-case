@@ -1,4 +1,3 @@
-# Gasket Case
 # [Gasket Case](https://github.com/danvanbueren/gasket-case) &middot; [![License](https://img.shields.io/badge/license-all_rights_reserved-blue)](https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md) [![Repo Size](https://img.shields.io/github/repo-size/danvanbueren/gasket-case?color=blue)](https://github.com/danvanbueren/gasket-case) [![Issues](https://img.shields.io/github/issues/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/issues) [![Last Commit](https://img.shields.io/github/last-commit/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/commits/main/)
 
 A privacy-first, decentralized automotive maintenance lifecycle logging and forecasting application.
