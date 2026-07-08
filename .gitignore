@@ -10,6 +10,9 @@ node_modules/
 .DS_Store
 **/Thumbs.db
 
+# IDE metadata
+.idea
+
 # Environment local files
 .env*.local
 **/.env*.local
