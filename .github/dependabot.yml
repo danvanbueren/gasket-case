@@ -2,7 +2,7 @@
 version: 2
 updates:
   - package-ecosystem: npm
-    directory: /vanbueren-cloud
+    directory: /gasket-case
     schedule:
       interval: weekly
       day: monday
