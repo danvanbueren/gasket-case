@@ -1,7 +1,13 @@
+import packageJson from '../package.json'
 import Providers from './providers'
 
+const PROJECT_NAME = packageJson.name
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ')
+
 export const metadata = {
-    title: 'Gasket Case',
+    title: PROJECT_NAME,
     description: 'A decentralized, zero-storage automotive maintenance logging and predictive forecasting tool powered by your own Google Drive.',
     icons: {
         icon: [
@@ -13,7 +19,7 @@ export const metadata = {
     },
     manifest: '/icon/manifest.json',
     appleWebApp: {
-        title: 'Gasket Case',
+        title: PROJECT_NAME,
     },
 }
 
