@@ -8,7 +8,7 @@ const PROJECT_NAME = packageJson.name
 
 export const metadata = {
     title: PROJECT_NAME,
-    description: 'A decentralized, zero-storage automotive maintenance logging and predictive forecasting tool powered by your own Google Drive.',
+    description: `${PROJECT_NAME} - A decentralized, zero-storage automotive maintenance logging and predictive forecasting tool powered by your own Google Drive.`,
     icons: {
         icon: [
             { url: '/icon/icon0.svg', type: 'image/svg+xml' },
