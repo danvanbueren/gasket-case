@@ -16,3 +16,8 @@ node_modules/
 # Environment local files
 .env*.local
 **/.env*.local
+
+# Bun
+.bun
+bun-debug.log*
+bun-error.log*
