@@ -76,8 +76,8 @@ Run the following commands in the application directory:
 
 ```bash
 cd  gasket-case
-npm  install
-npm  run  dev
+bun  install
+bun  run  dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
