@@ -77,7 +77,13 @@ THE DEVELOPER AND CONTRIBUTORS EXPLICITLY DISCLAIM ALL WARRANTIES, INCLUDING BUT
 
 ---
 
-## 7. Permitted Use & User Responsibilities
+## 7. Privacy & Data Handling Practices
+
+Your privacy and our data handling practices are governed by our **[Privacy Policy](PRIVACY.md)**. Please review the Privacy Policy for full disclosures regarding our non-custodial data flow, scoped Google OAuth permissions, compliance with the Google API Services User Data Policy (including Limited Use requirements), and your privacy rights under the GDPR and CCPA/CPRA.
+
+---
+
+## 8. Permitted Use & User Responsibilities
 
 You agree that you will:
 * Use GasketCase solely for lawful automotive maintenance tracking purposes in accordance with these Terms;
@@ -88,13 +94,13 @@ You agree that you will:
 
 ---
 
-## 8. Intellectual Property
+## 9. Intellectual Property
 
 All rights, title, and interest in and to the GasketCase codebase, design, trademarks, and user interface are owned by Daniel Van Bueren as set forth in [LICENSE.md](https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md). You are granted a limited, personal, revocable, non-exclusive, non-transferable license to access and use the hosted Service for your personal vehicle maintenance tracking.
 
 ---
 
-## 9. Modifications to the Service and Terms
+## 10. Modifications to the Service and Terms
 
 We reserve the right, at our sole discretion, to modify, update, suspend, or discontinue GasketCase (or any portion thereof) at any time without notice or liability.
 
@@ -102,13 +108,13 @@ We may also update these Terms periodically. When changes are made, the "Last Up
 
 ---
 
-## 10. Severability & Entire Agreement
+## 11. Severability & Entire Agreement
 
 If any provision of these Terms is found to be unlawful, void, or unenforceable, that provision shall be deemed severable and shall not affect the validity and enforceability of any remaining provisions. These Terms, together with our [Privacy Policy](PRIVACY.md) and [LICENSE.md](LICENSE.md), constitute the entire agreement between you and Daniel Van Bueren regarding GasketCase.
 
 ---
 
-## 11. Contact Us
+## 12. Contact Us
 
 If you have questions, feedback, or concerns regarding these Terms of Service, we prefer contact through our GitHub repository issues, with email available as a backup:
 

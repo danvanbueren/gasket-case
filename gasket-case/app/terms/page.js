@@ -517,7 +517,42 @@ export default function TermsOfServicePage() {
               mb: 1.5,
             }}
           >
-            7. Permitted Use &amp; User Responsibilities
+            7. Privacy &amp; Data Handling Practices
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              lineHeight: 1.7,
+              color: 'text.secondary',
+              mb: 4,
+            }}
+          >
+            Your privacy and our data handling practices are governed by our{' '}
+            <Box
+              component={Link}
+              href="/privacy"
+              sx={{
+                color: 'primary.main',
+                textDecoration: 'underline',
+                fontWeight: 600,
+              }}
+            >
+              Privacy Policy
+            </Box>
+            . Please review the Privacy Policy for full disclosures regarding our non-custodial data flow, scoped Google OAuth permissions, compliance with the Google API Services User Data Policy (including Limited Use requirements), and your privacy rights under the GDPR and CCPA/CPRA.
+          </Typography>
+
+          {/* Section 8 */}
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              color: '#F3F4F6',
+              mb: 1.5,
+            }}
+          >
+            8. Permitted Use &amp; User Responsibilities
           </Typography>
           <Typography
             variant="body2"
@@ -547,7 +582,7 @@ export default function TermsOfServicePage() {
             <li>Violate intellectual property rights as set forth in the project&rsquo;s <a href="https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer" style={{ color: '#06B6D4' }}>LICENSE.md</a>.</li>
           </Box>
 
-          {/* Section 8 */}
+          {/* Section 9 */}
           <Typography
             variant="h6"
             component="h2"
@@ -557,7 +592,7 @@ export default function TermsOfServicePage() {
               mb: 1.5,
             }}
           >
-            8. Intellectual Property
+            9. Intellectual Property
           </Typography>
           <Typography
             variant="body2"
@@ -570,7 +605,7 @@ export default function TermsOfServicePage() {
             All rights, title, and interest in and to the GasketCase codebase, design, trademarks, and user interface are owned by Daniel Van Bueren as set forth in <a href="https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer" style={{ color: '#06B6D4' }}>LICENSE.md</a>. You are granted a limited, personal, revocable, non-exclusive, non-transferable license to access and use the hosted Service for your personal vehicle maintenance tracking.
           </Typography>
 
-          {/* Section 9 */}
+          {/* Section 10 */}
           <Typography
             variant="h6"
             component="h2"
@@ -580,7 +615,7 @@ export default function TermsOfServicePage() {
               mb: 1.5,
             }}
           >
-            9. Modifications to the Service and Terms
+            10. Modifications to the Service and Terms
           </Typography>
           <Typography
             variant="body2"
@@ -593,7 +628,7 @@ export default function TermsOfServicePage() {
             We reserve the right to modify, update, suspend, or discontinue GasketCase (or any portion thereof) at any time without notice or liability. We may also update these Terms periodically. Your continued use of the Service following any modifications constitutes your acceptance of the revised Terms.
           </Typography>
 
-          {/* Section 10 */}
+          {/* Section 11 */}
           <Typography
             variant="h6"
             component="h2"
@@ -603,7 +638,7 @@ export default function TermsOfServicePage() {
               mb: 1.5,
             }}
           >
-            10. Severability &amp; Entire Agreement
+            11. Severability &amp; Entire Agreement
           </Typography>
           <Typography
             variant="body2"
@@ -616,7 +651,7 @@ export default function TermsOfServicePage() {
             If any provision of these Terms is found to be unlawful, void, or unenforceable, that provision shall be deemed severable and shall not affect the validity of remaining provisions. These Terms, together with our <Box component={Link} href="/privacy" sx={{ color: 'primary.main', textDecoration: 'underline' }}>Privacy Policy</Box> and <a href="https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer" style={{ color: '#06B6D4' }}>LICENSE.md</a>, constitute the entire agreement between you and Daniel Van Bueren regarding GasketCase.
           </Typography>
 
-          {/* Section 11 */}
+          {/* Section 12 */}
           <Typography
             variant="h6"
             component="h2"
@@ -626,7 +661,7 @@ export default function TermsOfServicePage() {
               mb: 1.5,
             }}
           >
-            11. Contact Us
+            12. Contact Us
           </Typography>
           <Typography
             variant="body2"

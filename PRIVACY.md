@@ -101,9 +101,9 @@ We do not disclose your personal data to third parties, except in the following 
 
 ---
 
-## 6. Non-Custodial Status, Data Storage, & Deletion
+## 6. Non-Custodial Architecture, Data Storage, & Deletion
 
-* **Zero Server-Side Custody:** Because GasketCase does not maintain a central database and stores no records on its servers, **we have no custody or possession of your data.** Your maintenance records exist exclusively in your Google Drive or local browser storage.
+* **Zero Server-Side Custody:** Because GasketCase does not maintain a central database and stores no user records on its servers, **we have no custody or possession of your data.** Your maintenance records exist exclusively in your Google Drive or local browser storage.
 * **No Server Data to Delete or Recover:** Because no records are maintained by the server, GasketCase cannot delete, restore, recover, or alter your data on your behalf.
 * **Deleting Your Data (Self-Service):**
   * **Google Drive Sheets:** You can permanently delete any vehicle log spreadsheet at any time by moving the corresponding `GasketCase_...` file to the trash inside [Google Drive](https://drive.google.com).
@@ -113,38 +113,7 @@ We do not disclose your personal data to third parties, except in the following 
 
 ---
 
-## 7. Non-Custodial Architecture, Zero Custodial Liability, & "Use at Your Own Risk"
-
-**PLEASE READ THIS SECTION CAREFULLY. IT GOVERNS THE NON-CUSTODIAL NATURE OF GASKETCASE AND ELIMINATES ALL LIABILITY OF THE DEVELOPER.**
-
-### A. Confirmation of Non-Custodial Status & No Server-Side Maintenance
-You explicitly acknowledge, understand, and agree that:
-1. **No Data Maintained by Server or Developer:** GasketCase, its underlying hosting infrastructure, and developer Daniel Van Bueren **do not maintain, store, hold, possess, back up, or curate any user data, vehicle records, or maintenance logs.**
-2. **Not a Data Custodian:** GasketCase is NOT a data custodian, data repository, cloud storage service, or fiduciary.
-3. **No Bailment or Custodial Duty:** Your use of GasketCase does not create any bailment, custodial obligation, duty of care, or fiduciary relationship between you and Daniel Van Bueren.
-4. **Sole User Custody:** You are the sole and exclusive custodian of your records, which reside entirely in your personal Google Drive account or local browser cache.
-
-### B. Complete Absence of Liability for Data Loss or Corruption
-Because neither the server nor the developer maintains or holds custody of your data:
-* **Zero Liability for Data:** In no event shall Daniel Van Bueren, project maintainers, or contributors be liable for any loss, corruption, erasure, alteration, desynchronization, accidental overwrite, or unavailability of your spreadsheets, vehicle records, or local data, whether caused by software errors, Google API changes/outages, network failures, hardware defects, browser cache clearing, or user actions.
-* **No Duty to Preserve or Restore:** The developer owes no duty to preserve, monitor, verify, restore, or recover any data. You are solely and exclusively responsible for maintaining independent, periodic backups of your vehicle records and spreadsheets.
-
-### C. "As-Is" Provision & "Use at Your Own Risk"
-GasketCase is provided strictly on an **"AS IS"** and **"AS AVAILABLE"** basis, without warranties of any kind, whether express, implied, statutory, or otherwise. To the maximum extent permitted by applicable law, the developer and contributors disclaim all warranties, including implied warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, and title.
-
-### D. Automotive Advisory & Estimation Disclaimer
-You acknowledge that:
-* **Mathematical Extrapolation Only:** GasketCase calculates daily odometer velocity ($\Delta V$) and forecasts upcoming maintenance milestones based purely on mathematical linear extrapolation of user-supplied inputs and default values. These are rough estimates for informational tracking only.
-* **No Professional Automotive Advice:** GasketCase does NOT provide automotive, mechanical, safety, engineering, or legal advice. GasketCase does not guarantee that following any forecast will prevent breakdowns, mechanical failure, wear, or warranty invalidation. You remain solely responsible for consulting certified automotive technicians and reviewing official vehicle manufacturer manuals.
-
-### E. Comprehensive Limitation of Liability
-TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL DANIEL VAN BUEREN, CONTRIBUTORS, OR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING DAMAGES FOR LOSS OF DATA, LOSS OF PROFITS, BUSINESS INTERRUPTION, VEHICLE DAMAGE, MECHANICAL DAMAGE, REPAIR COSTS, PERSONAL INJURY, OR REPUTATIONAL HARM) ARISING OUT OF OR IN CONNECTION WITH THE USE OF, INABILITY TO USE, OR RELIANCE UPON GASKETCASE, UNDER ANY THEORY OF LIABILITY (WHETHER IN CONTRACT, TORT, STRICT LIABILITY, NEGLIGENCE, OR OTHERWISE), EVEN IF INFORMED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-BECAUSE NO DATA IS MAINTAINED BY THE SERVER OR DEVELOPER, THE DEVELOPER BEARS ZERO LIABILITY. IF APPLICABLE LAW DOES NOT PERMIT TOTAL EXCLUSION OF LIABILITY, AGGREGATE LIABILITY SHALL NOT EXCEED ONE UNITED STATES DOLLAR (\$1.00 USD).
-
----
-
-## 8. Security of Your Information
+## 7. Security of Your Information
 
 We employ industry-standard technical measures to ensure your data remains secure:
 * **Encryption in Transit:** All traffic between your browser, our serverless routes, and Google APIs is strictly encrypted using HTTPS / Transport Layer Security (TLS).
@@ -153,7 +122,7 @@ We employ industry-standard technical measures to ensure your data remains secur
 
 ---
 
-## 9. Your Rights (GDPR & CCPA/CPRA)
+## 8. Your Rights (GDPR & CCPA/CPRA)
 
 Depending on your jurisdiction (including the European Economic Area, the UK, and California), you possess certain rights regarding your personal data:
 
@@ -163,13 +132,19 @@ Depending on your jurisdiction (including the European Economic Area, the UK, an
 * **Right to Withdraw Consent:** You can disconnect GasketCase at any time via your Google Account settings.
 * **California Consumer Privacy Act (CCPA/CPRA):** We do not "sell" or "share" personal information as those terms are defined under California law. We do not discriminate against users for exercising any privacy rights.
 
-To submit a request or exercise any of your rights, we prefer that you open an issue on [GitHub Issues](https://github.com/danvanbueren/gasket-case/issues), or you can email us at [gasket-case@googlegroups.com](mailto:gasket-case@googlegroups.com).
+To submit a request or exercise any of your privacy rights, we prefer that you open an issue on [GitHub Issues](https://github.com/danvanbueren/gasket-case/issues), or you can email us at [gasket-case@googlegroups.com](mailto:gasket-case@googlegroups.com).
 
 ---
 
-## 10. Children's Privacy
+## 9. Children's Privacy
 
 GasketCase is not directed to individuals under the age of 13 (or under 16 where applicable by local law). We do not knowingly collect personal information from children. If you believe a child has provided us with personal data, please reach out via [GitHub Issues](https://github.com/danvanbueren/gasket-case/issues) or contact us at [gasket-case@googlegroups.com](mailto:gasket-case@googlegroups.com), and we will take immediate steps to assist in removing such information.
+
+---
+
+## 10. Relationship to Terms of Service
+
+This Privacy Policy governs our privacy, data handling, and Google API compliance practices. Your access to and use of GasketCase is subject to our **[Terms of Service](TERMS.md)**, which sets forth the contractual terms between you and Daniel Van Bueren, including our non-custodial software model, "Use at Your Own Risk" automotive advisory, disclaimer of warranties, and comprehensive limitations of liability.
 
 ---
 
@@ -181,7 +156,7 @@ We may update this Privacy Policy from time to time to reflect improvements in o
 
 ## 12. Contact Us
 
-If you have questions, feedback, or concerns regarding this Privacy Policy or our privacy practices, please contact us. We prefer contact through our GitHub Issues tracker, with email available as a backup:
+If you have questions, feedback, or concerns regarding this Privacy Policy or our data practices, please contact us. We prefer contact through our GitHub Issues tracker, with email available as a backup:
 
 * **Primary Channel (GitHub Issues):** [https://github.com/danvanbueren/gasket-case/issues](https://github.com/danvanbueren/gasket-case/issues)  
 * **Backup Channel (Email):** [gasket-case@googlegroups.com](mailto:gasket-case@googlegroups.com)  

@@ -15,8 +15,6 @@ import DirectionsCarIcon from '@mui/icons-material/DirectionsCar'
 import SecurityIcon from '@mui/icons-material/Security'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
 import StorageIcon from '@mui/icons-material/Storage'
-import GavelIcon from '@mui/icons-material/Gavel'
-import WarningIcon from '@mui/icons-material/Warning'
 
 export default function PrivacyPolicyPage() {
   return (
@@ -610,111 +608,7 @@ export default function PrivacyPolicyPage() {
             </li>
           </Box>
 
-          {/* Section 7 - Non-Custodial Architecture, Zero Custodial Liability, & "Use at Your Own Risk" */}
-          <Paper
-            elevation={0}
-            sx={{
-              p: 3,
-              borderRadius: 2,
-              backgroundColor: 'rgba(245, 158, 11, 0.05)',
-              border: '1px solid rgba(245, 158, 11, 0.3)',
-              mb: 4,
-            }}
-          >
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 1.5,
-                mb: 1.5,
-              }}
-            >
-              <WarningIcon
-                sx={{
-                  color: 'warning.main',
-                  fontSize: '1.6rem',
-                }}
-              />
-              <Typography
-                variant="h6"
-                component="h2"
-                sx={{
-                  fontWeight: 700,
-                  color: '#F3F4F6',
-                }}
-              >
-                7. Non-Custodial Architecture, Zero Custodial Liability, &amp; &ldquo;Use at Your Own Risk&rdquo;
-              </Typography>
-            </Box>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: '#FEF3C7',
-                mb: 2,
-                fontWeight: 600,
-              }}
-            >
-              PLEASE READ THIS SECTION CAREFULLY. IT GOVERNS THE NON-CUSTODIAL NATURE OF GASKETCASE AND ELIMINATES ALL LIABILITY OF THE DEVELOPER.
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: 'text.secondary',
-                mb: 2,
-              }}
-            >
-              <strong style={{ color: '#F3F4F6' }}>A. Confirmation of Non-Custodial Status &amp; No Server-Side Maintenance:</strong> You explicitly acknowledge and agree that GasketCase, its server infrastructure, and developer Daniel Van Bueren do not maintain, store, hold, possess, back up, or curate any user data, vehicle records, or maintenance logs. GasketCase is NOT a data custodian, data repository, or fiduciary. No bailment, custodial duty, or fiduciary relationship is created. You are the sole and exclusive custodian of your records.
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: 'text.secondary',
-                mb: 2,
-              }}
-            >
-              <strong style={{ color: '#F3F4F6' }}>B. Complete Absence of Liability for Data Loss:</strong> Because neither the server nor the developer maintains or holds custody of your data, the developer and maintainers have NO legal liability, NO duty of care, and NO obligation regarding any data loss, spreadsheet deletion, corruption, synchronization errors, or service interruptions. The developer owes no duty to preserve or restore your data. You are solely responsible for maintaining independent backups.
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: 'text.secondary',
-                mb: 2,
-              }}
-            >
-              <strong style={{ color: '#F3F4F6' }}>C. &ldquo;As-Is&rdquo; Provision &amp; &ldquo;Use at Your Own Risk&rdquo;:</strong> GasketCase is provided strictly on an &ldquo;AS IS&rdquo; and &ldquo;AS AVAILABLE&rdquo; basis, without warranties of any kind, whether express, implied, statutory, or otherwise. The developer and contributors disclaim all warranties, including implied warranties of merchantability, fitness for a particular purpose, non-infringement, accuracy, and title.
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: 'text.secondary',
-                mb: 2,
-              }}
-            >
-              <strong style={{ color: '#F3F4F6' }}>D. Automotive Advisory &amp; Estimation Disclaimer:</strong> You acknowledge that odometer velocity (&Delta;V) and forecasted milestone dates are rough mathematical estimates for personal tracking only. GasketCase does NOT provide automotive, mechanical, safety, engineering, or legal advice, and does not guarantee that following any forecast will prevent breakdowns or parts wear. You remain solely responsible for consulting certified automotive technicians.
-            </Typography>
-
-            <Typography
-              variant="body2"
-              sx={{
-                lineHeight: 1.7,
-                color: 'text.secondary',
-              }}
-            >
-              <strong style={{ color: '#F3F4F6' }}>E. Comprehensive Limitation of Liability:</strong> TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL DANIEL VAN BUEREN, CONTRIBUTORS, OR AFFILIATES BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE, OR CONSEQUENTIAL DAMAGES WHATSOEVER (INCLUDING DAMAGES FOR LOSS OF DATA, LOSS OF PROFITS, VEHICLE DAMAGE, MECHANICAL FAILURE, REPAIR COSTS, PERSONAL INJURY, OR REPUTATIONAL HARM) ARISING OUT OF OR IN CONNECTION WITH THE USE OF OR INABILITY TO USE GASKETCASE, UNDER ANY THEORY OF LIABILITY. BECAUSE NO DATA IS MAINTAINED BY THE SERVER OR DEVELOPER, THE DEVELOPER BEARS ZERO LIABILITY. AGGREGATE LIABILITY SHALL NOT EXCEED ONE UNITED STATES DOLLAR ($1.00 USD).
-            </Typography>
-          </Paper>
-
-          {/* Section 8 */}
+          {/* Section 7 */}
           <Typography
             variant="h6"
             component="h2"
@@ -724,7 +618,7 @@ export default function PrivacyPolicyPage() {
               mb: 1.5,
             }}
           >
-            8. Security of Your Information
+            7. Security of Your Information
           </Typography>
           <Typography
             variant="body2"
@@ -737,7 +631,7 @@ export default function PrivacyPolicyPage() {
             All network communication between your browser, GasketCase serverless routes, and Google APIs is strictly encrypted using Transport Layer Security (TLS/HTTPS). We use short-lived OAuth 2.0 access tokens and never receive or store your Google account password. Scoped permissions (<code>drive.file</code>) prevent access to non-GasketCase documents.
           </Typography>
 
-          {/* Section 9 */}
+          {/* Section 8 */}
           <Typography
             variant="h6"
             component="h2"
@@ -747,7 +641,7 @@ export default function PrivacyPolicyPage() {
               mb: 1.5,
             }}
           >
-            9. Your Rights (GDPR &amp; CCPA/CPRA)
+            8. Your Rights (GDPR &amp; CCPA/CPRA)
           </Typography>
           <Typography
             variant="body2"
@@ -785,7 +679,7 @@ export default function PrivacyPolicyPage() {
               mb: 4,
             }}
           >
-            To submit a request or exercise any of your rights, we prefer that you open an issue on our{' '}
+            To submit a request or exercise any of your privacy rights, we prefer that you open an issue on our{' '}
             <Box
               component="a"
               href="https://github.com/danvanbueren/gasket-case/issues"
@@ -820,7 +714,7 @@ export default function PrivacyPolicyPage() {
             .
           </Typography>
 
-          {/* Section 10 */}
+          {/* Section 9 */}
           <Typography
             variant="h6"
             component="h2"
@@ -830,7 +724,7 @@ export default function PrivacyPolicyPage() {
               mb: 1.5,
             }}
           >
-            10. Children&rsquo;s Privacy
+            9. Children&rsquo;s Privacy
           </Typography>
           <Typography
             variant="body2"
@@ -873,6 +767,41 @@ export default function PrivacyPolicyPage() {
               gasket-case@googlegroups.com
             </Box>
             , and we will take immediate steps to assist in removing such information.
+          </Typography>
+
+          {/* Section 10 */}
+          <Typography
+            variant="h6"
+            component="h2"
+            sx={{
+              fontWeight: 700,
+              color: '#F3F4F6',
+              mb: 1.5,
+            }}
+          >
+            10. Relationship to Terms of Service
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{
+              lineHeight: 1.7,
+              color: 'text.secondary',
+              mb: 4,
+            }}
+          >
+            This Privacy Policy governs our privacy practices, data handling, and Google API compliance. Your access to and use of GasketCase is subject to our{' '}
+            <Box
+              component={Link}
+              href="/terms"
+              sx={{
+                color: 'primary.main',
+                textDecoration: 'underline',
+                fontWeight: 600,
+              }}
+            >
+              Terms of Service
+            </Box>
+            , which establishes our non-custodial software model, automotive advisory disclaimers, disclaimer of warranties, and comprehensive limitations of liability.
           </Typography>
 
           {/* Section 11 */}
