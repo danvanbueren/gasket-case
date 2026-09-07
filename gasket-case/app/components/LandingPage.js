@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Link from 'next/link'
 import {
   Box,
   Container,
@@ -331,10 +332,36 @@ export default function LandingPage({ onSignIn, onEnterDemoMode }) {
           variant="caption"
           sx={{
             color: 'text.secondary',
+            display: 'block',
+            mb: 1,
           }}
         >
           GasketCase Privacy-First Automotive Lifecycle Logging. Owned by you. Housed by Google.
         </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: 2,
+          }}
+        >
+          <Typography
+            component={Link}
+            href="/privacy"
+            variant="caption"
+            sx={{
+              color: 'text.secondary',
+              textDecoration: 'none',
+              '&:hover': {
+                color: 'primary.main',
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            Privacy Policy
+          </Typography>
+        </Box>
       </Box>
     </Box>
   )
