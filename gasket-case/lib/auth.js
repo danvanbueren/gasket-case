@@ -1,5 +1,12 @@
 import GoogleProvider from 'next-auth/providers/google'
 
+// Ensure NEXTAUTH_URL always uses HTTPS in production environments
+if (process.env.NEXTAUTH_URL && process.env.NEXTAUTH_URL.startsWith('http://') && !process.env.NEXTAUTH_URL.includes('localhost')) {
+  process.env.NEXTAUTH_URL = process.env.NEXTAUTH_URL.replace('http://', 'https://')
+} else if (!process.env.NEXTAUTH_URL && process.env.VERCEL) {
+  process.env.NEXTAUTH_URL = `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL || process.env.VERCEL_URL || 'gasketcase.app'}`
+}
+
 /**
  * Refreshes Google OAuth access token when expired using the refresh token
  */
