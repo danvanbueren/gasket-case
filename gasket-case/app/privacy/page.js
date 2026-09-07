@@ -472,10 +472,7 @@ export default function PrivacyPolicyPage() {
               }}
             >
               <li>
-                <code>https://www.googleapis.com/auth/drive.file</code>: Strictly permits GasketCase to create and edit spreadsheets created by or opened with the application (prefixed with <code>GasketCase_</code>). GasketCase cannot access, read, or see any other files in your Google Drive.
-              </li>
-              <li>
-                <code>https://www.googleapis.com/auth/spreadsheets</code>: Used solely to read and append vehicle maintenance rows to your log sheets.
+                <code>https://www.googleapis.com/auth/drive.file</code>: Strictly permits GasketCase to create and edit spreadsheets created by or opened with the application (prefixed with <code>GasketCase_</code>), including reading and appending maintenance rows. GasketCase cannot access, read, or see any other files or spreadsheets in your Google Drive.
               </li>
               <li>
                 <code>openid</code>, <code>email</code>, <code>profile</code>: Used solely for identity authentication and session display.

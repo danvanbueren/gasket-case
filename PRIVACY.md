@@ -71,11 +71,9 @@ GasketCase accesses and interacts with Google APIs to deliver core functionality
 
 ### Scopes Requested and Purpose:
 1. `https://www.googleapis.com/auth/drive.file`
-   * **Purpose:** Allows GasketCase to create, view, and manage only the specific Google Sheets files that were created by GasketCase (files prefixed with `GasketCase_`) or that you explicitly open with the application.
-   * **Limitation:** GasketCase has zero visibility or access to any of your other documents, photos, or files stored in Google Drive.
-2. `https://www.googleapis.com/auth/spreadsheets`
-   * **Purpose:** Enables reading existing maintenance rows and appending new maintenance logs to your vehicle log sheets.
-3. `openid`, `email`, `profile`
+   * **Purpose:** Allows GasketCase to create, view, and manage only the specific Google Sheets files that were created by GasketCase (files prefixed with `GasketCase_`) or that you explicitly open with the application. Also permits reading and appending vehicle maintenance rows directly to those vehicle log sheets.
+   * **Limitation:** GasketCase has zero visibility or access to any of your other documents, photos, or files stored in Google Drive, nor any unrelated Google Sheets.
+2. `openid`, `email`, `profile`
    * **Purpose:** Verifies your Google identity and displays your profile information in the user interface.
 
 ### Limited Use Affirmations:

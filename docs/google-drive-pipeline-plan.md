@@ -29,8 +29,8 @@ While the foundation for this architecture is in place, connecting to Google Dri
 * Even though `access_type: 'offline'` is requested, `account.refresh_token` and `account.expires_at` are discarded. After 60 minutes, the stored `accessToken` expires permanently, causing all subsequent Drive and Sheets API calls to fail with HTTP 401 `Invalid Credentials`.
 
 ### 2.3 Scope Semantics & File Discovery (`drive.file`)
-* The app requests `https://www.googleapis.com/auth/drive.file` and `https://www.googleapis.com/auth/spreadsheets`.
-* **Behavior of `drive.file`**: This scope grants access **only** to files created by the application's specific OAuth Client ID, or files explicitly chosen by the user via the Google Picker API.
+* The app requests `https://www.googleapis.com/auth/drive.file` (excluding the sensitive `auth/spreadsheets` scope to adhere to least-privilege security).
+* **Behavior of `drive.file`**: This scope grants access **only** to files created by the application's specific OAuth Client ID, or files explicitly chosen by the user via the Google Picker API. The Google Sheets API operates completely within `drive.file` for app-created spreadsheets.
 * **Discovery Quirk**: Any spreadsheet created manually in Google Drive (even if named `GasketCase_...`) will **not** be returned by `drive.files.list`. The app can only see files it created itself.
 * **Sharing Limitation**: When User A shares a file with User B (`action: 'share_vehicle'`), User B will not automatically see it in `drive.files.list` under `drive.file` scope unless selected via Google Picker or granted broader scope permissions.
 
@@ -81,7 +81,7 @@ flowchart LR
 - [ ] In GCP *APIs & Services > Credentials*:
   - Add Authorized Redirect URI: `http://localhost:3000/api/auth/callback/google`.
 - [ ] In GCP *OAuth Consent Screen*:
-  - Add scopes: `.../auth/drive.file`, `.../auth/spreadsheets`, `openid`, `email`, `profile`.
+  - Add scopes: `.../auth/drive.file`, `openid`, `email`, `profile`.
   - Add developer/tester email addresses under **Test users**.
 
 ---

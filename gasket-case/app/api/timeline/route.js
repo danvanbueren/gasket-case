@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { google } from 'googleapis'
-import { authOptions } from '../auth/[...nextauth]/route'
+import { authOptions } from '@/lib/auth'
 
 const DEFAULT_INTERVALS = {
   'Oil Change': 5000,
@@ -12,10 +12,16 @@ const DEFAULT_INTERVALS = {
   'Coolant Flush': 100000,
 }
 
-// Helper to get Google API clients
-function getGoogleClients(accessToken) {
-  const oauth2Client = new google.auth.OAuth2()
-  oauth2Client.setCredentials({ access_token: accessToken })
+// Helper to get Google API clients with OAuth credentials
+function getGoogleClients(session) {
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET
+  )
+  oauth2Client.setCredentials({
+    access_token: session.accessToken,
+    refresh_token: session.refreshToken,
+  })
   return {
     drive: google.drive({ version: 'v3', auth: oauth2Client }),
     sheets: google.sheets({ version: 'v4', auth: oauth2Client }),
@@ -32,7 +38,7 @@ export async function GET(request) {
     const { searchParams } = new URL(request.url)
     const spreadsheetId = searchParams.get('spreadsheetId')
 
-    const { drive, sheets } = getGoogleClients(session.accessToken)
+    const { drive, sheets } = getGoogleClients(session)
 
     // Action 1: List all GasketCase vehicle log spreadsheets in the user's Drive
     if (!spreadsheetId) {
@@ -191,7 +197,7 @@ export async function POST(request) {
 
     const body = await request.json()
     const { action, spreadsheetId } = body
-    const { drive, sheets } = getGoogleClients(session.accessToken)
+    const { drive, sheets } = getGoogleClients(session)
 
     // Action 1: Create a new vehicle log spreadsheet
     if (action === 'create_vehicle') {
@@ -200,15 +206,27 @@ export async function POST(request) {
         return Response.json({ error: 'Vehicle name is required' }, { status: 400 })
       }
 
-      // Create spreadsheet in Drive
-      const file = await drive.files.create({
+      // Create spreadsheet in Drive using native Sheets API with explicit Sheet1 tab
+      const sheetResponse = await sheets.spreadsheets.create({
         requestBody: {
-          name: `GasketCase_${name}`,
-          mimeType: 'application/vnd.google-apps.spreadsheet',
+          properties: {
+            title: `GasketCase_${name}`,
+          },
+          sheets: [
+            {
+              properties: {
+                title: 'Sheet1',
+                gridProperties: {
+                  rowCount: 1000,
+                  columnCount: 10,
+                },
+              },
+            },
+          ],
         },
       })
 
-      const newId = file.data.id
+      const newId = sheetResponse.data.spreadsheetId
 
       // Initialize columns
       await sheets.spreadsheets.values.update({
