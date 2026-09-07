@@ -28,6 +28,52 @@ function getGoogleClients(session) {
   }
 }
 
+const GASKET_CASE_FOLDER_NAME = 'GasketCase'
+
+// Finds or creates the dedicated GasketCase folder in the user's Drive root
+async function getOrCreateGasketCaseFolder(drive) {
+  try {
+    const q = `mimeType='application/vnd.google-apps.folder' and name='${GASKET_CASE_FOLDER_NAME}' and trashed = false`
+    const res = await drive.files.list({
+      q,
+      fields: 'files(id, name)',
+      spaces: 'drive',
+    })
+
+    if (res.data.files && res.data.files.length > 0) {
+      return res.data.files[0].id
+    }
+
+    const folder = await drive.files.create({
+      requestBody: {
+        name: GASKET_CASE_FOLDER_NAME,
+        mimeType: 'application/vnd.google-apps.folder',
+      },
+      fields: 'id',
+    })
+
+    return folder.data.id
+  } catch (error) {
+    console.error('Error finding or creating GasketCase folder:', error)
+    return null
+  }
+}
+
+// Moves a file into the GasketCase folder
+async function moveFileToFolder(drive, fileId, folderId, existingParents) {
+  try {
+    const previousParents = (existingParents || []).join(',')
+    await drive.files.update({
+      fileId,
+      addParents: folderId,
+      removeParents: previousParents || 'root',
+      fields: 'id, parents',
+    })
+  } catch (error) {
+    console.error(`Failed to move file ${fileId} to GasketCase folder:`, error)
+  }
+}
+
 export async function GET(request) {
   try {
     const session = await getServerSession(authOptions)
@@ -42,13 +88,27 @@ export async function GET(request) {
 
     // Action 1: List all GasketCase vehicle log spreadsheets in the user's Drive
     if (!spreadsheetId) {
+      // Ensure dedicated GasketCase folder exists
+      const folderId = await getOrCreateGasketCaseFolder(drive)
+
       const q = "mimeType='application/vnd.google-apps.spreadsheet' and name contains 'GasketCase_' and trashed = false"
       const fileList = await drive.files.list({
         q,
-        fields: 'files(id, name, owners)',
+        fields: 'files(id, name, owners, parents)',
       })
 
-      const vehicles = (fileList.data.files || []).map(file => ({
+      const files = fileList.data.files || []
+
+      // Auto-migrate any vehicle sheets that are not yet organized inside the GasketCase folder
+      if (folderId) {
+        for (const file of files) {
+          if (!file.parents || !file.parents.includes(folderId)) {
+            moveFileToFolder(drive, file.id, folderId, file.parents)
+          }
+        }
+      }
+
+      const vehicles = files.map(file => ({
         id: file.id,
         name: file.name.replace('GasketCase_', ''),
         owners: file.owners,
@@ -206,27 +266,20 @@ export async function POST(request) {
         return Response.json({ error: 'Vehicle name is required' }, { status: 400 })
       }
 
-      // Create spreadsheet in Drive using native Sheets API with explicit Sheet1 tab
-      const sheetResponse = await sheets.spreadsheets.create({
+      // Ensure dedicated GasketCase folder exists
+      const folderId = await getOrCreateGasketCaseFolder(drive)
+
+      // Create spreadsheet directly inside the GasketCase folder
+      const file = await drive.files.create({
         requestBody: {
-          properties: {
-            title: `GasketCase_${name}`,
-          },
-          sheets: [
-            {
-              properties: {
-                title: 'Sheet1',
-                gridProperties: {
-                  rowCount: 1000,
-                  columnCount: 10,
-                },
-              },
-            },
-          ],
+          name: `GasketCase_${name}`,
+          mimeType: 'application/vnd.google-apps.spreadsheet',
+          parents: folderId ? [folderId] : [],
         },
+        fields: 'id, name',
       })
 
-      const newId = sheetResponse.data.spreadsheetId
+      const newId = file.data.id
 
       // Initialize columns
       await sheets.spreadsheets.values.update({
