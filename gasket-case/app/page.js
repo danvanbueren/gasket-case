@@ -10,6 +10,7 @@ import Dashboard from './components/Dashboard'
 
 import LogDialog from './components/LogDialog'
 import VehicleDialog from './components/VehicleDialog'
+import ConfirmDeleteDialog from './components/ConfirmDeleteDialog'
 import ShareDialog from './components/ShareDialog'
 import IntervalsDialog from './components/IntervalsDialog'
 
@@ -39,6 +40,8 @@ export default function Home() {
   // Modal Dialog States
   const [openLogDialog, setOpenLogDialog] = useState(false)
   const [openVehicleDialog, setOpenVehicleDialog] = useState(false)
+  const [vehicleDialogMode, setVehicleDialogMode] = useState('create')
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [openShareDialog, setOpenShareDialog] = useState(false)
   const [openIntervalsDialog, setOpenIntervalsDialog] = useState(false)
   
@@ -230,6 +233,116 @@ export default function Home() {
     }
   }
 
+  // Rename Vehicle Spreadsheet Handler
+  const handleRenameVehicle = async (newName) => {
+    if (!selectedVehicle || !newName || newName === selectedVehicle.name) return
+    setIsSaving(true)
+
+    if (demoMode) {
+      const updated = vehicles.map((v) =>
+        v.id === selectedVehicle.id ? { ...v, name: newName } : v
+      )
+      setVehicles(updated)
+      setSelectedVehicle((prev) => ({ ...prev, name: newName }))
+      localStorage.setItem('gasketcase_demo_vehicles', JSON.stringify(updated))
+      setOpenVehicleDialog(false)
+      setIsSaving(false)
+      return
+    }
+
+    try {
+      const res = await fetch('/api/timeline', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'rename_vehicle',
+          spreadsheetId: selectedVehicle.id,
+          name: newName,
+        }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setVehicles((prev) =>
+          prev.map((v) => (v.id === selectedVehicle.id ? { ...v, name: newName } : v))
+        )
+        setSelectedVehicle((prev) => ({ ...prev, name: newName }))
+        setOpenVehicleDialog(false)
+      } else {
+        alert(data.error || 'Failed to rename vehicle')
+      }
+    } catch (err) {
+      console.error('Failed to rename vehicle:', err)
+      alert('An error occurred while renaming vehicle.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  // Delete Vehicle Handler (moves to Google Drive Trash)
+  const handleDeleteVehicle = async () => {
+    if (!selectedVehicle) return
+    setIsSaving(true)
+
+    const deletedId = selectedVehicle.id
+    const remainingVehicles = vehicles.filter((v) => v.id !== deletedId)
+
+    if (demoMode) {
+      setVehicles(remainingVehicles)
+      localStorage.setItem('gasketcase_demo_vehicles', JSON.stringify(remainingVehicles))
+      localStorage.removeItem(`gasketcase_demo_events_${deletedId}`)
+      const nextVeh = remainingVehicles.length > 0 ? remainingVehicles[0] : null
+      setSelectedVehicle(nextVeh)
+      if (!nextVeh) {
+        setTimeline([])
+        setAnalytics({
+          dailyVelocity: 32.87,
+          velocityBasedOnData: false,
+          currentOdometer: 0,
+          totalSpent: 0,
+          logCount: 0,
+        })
+      }
+      setOpenDeleteDialog(false)
+      setIsSaving(false)
+      return
+    }
+
+    try {
+      const res = await fetch('/api/timeline', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'delete_vehicle',
+          spreadsheetId: deletedId,
+        }),
+      })
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setVehicles(remainingVehicles)
+        const nextVeh = remainingVehicles.length > 0 ? remainingVehicles[0] : null
+        setSelectedVehicle(nextVeh)
+        if (!nextVeh) {
+          setTimeline([])
+          setAnalytics({
+            dailyVelocity: 32.87,
+            velocityBasedOnData: false,
+            currentOdometer: 0,
+            totalSpent: 0,
+            logCount: 0,
+          })
+        }
+        setOpenDeleteDialog(false)
+      } else {
+        alert(data.error || 'Failed to delete vehicle')
+      }
+    } catch (err) {
+      console.error('Failed to delete vehicle:', err)
+      alert('An error occurred while deleting vehicle.')
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
   // Share Vehicle Handler
   const handleShareVehicle = async (shareEmail) => {
     if (!selectedVehicle) return
@@ -266,16 +379,17 @@ export default function Home() {
     }
   }
 
-  // Add Service Log Handler (supports optimistic updates)
+  // Add or Edit Service Log Handler (supports optimistic updates)
   const handleAddLog = async (logData) => {
     const componentName = logData.component === 'Other' ? logData.customComponent : logData.component
     if (!componentName || !logData.date || !logData.currentMileage) return
     
     setIsSaving(true)
+    const isEdit = Boolean(logData.id)
 
-    // Formulate new event
+    // Formulate event
     const freshLog = {
-      id: `log-${Date.now()}`,
+      id: isEdit ? logData.id : `log-${Date.now()}`,
       date: logData.date,
       component: componentName,
       currentMileage: parseFloat(logData.currentMileage),
@@ -283,9 +397,11 @@ export default function Home() {
       notes: logData.notes || '',
     }
 
-    // Optimistic Update: Append to timeline instantly for zero-latency feeling
+    // Optimistic Update: Append or update in timeline instantly for zero-latency feeling
     const currentEvents = timeline.filter((e) => !e.isPredictive)
-    const optimisticEvents = [...currentEvents, freshLog]
+    const optimisticEvents = isEdit
+      ? currentEvents.map((e) => (e.id === freshLog.id ? freshLog : e))
+      : [...currentEvents, freshLog]
     const optimisticResult = computeTimelineData(optimisticEvents, intervals)
 
     // Save previous states in case we need to roll back
@@ -303,34 +419,52 @@ export default function Home() {
     }
 
     try {
+      const payload = {
+        action: isEdit ? 'edit_log' : undefined,
+        spreadsheetId: selectedVehicle.id,
+        ...(isEdit ? { id: freshLog.id } : {}),
+        date: freshLog.date,
+        component: freshLog.component,
+        currentMileage: freshLog.currentMileage,
+        cost: freshLog.cost,
+        notes: freshLog.notes,
+      }
+
       const res = await fetch('/api/timeline', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          spreadsheetId: selectedVehicle.id,
-          date: freshLog.date,
-          component: freshLog.component,
-          currentMileage: freshLog.currentMileage,
-          cost: freshLog.cost,
-          notes: freshLog.notes,
-        }),
+        body: JSON.stringify(payload),
       })
 
       if (!res.ok) {
-        throw new Error('Server append failed')
+        throw new Error(isEdit ? 'Server update failed' : 'Server append failed')
       }
       
-      // Re-fetch timeline from sheets to synchronize with server-generated IDs
+      // Re-fetch timeline from sheets to synchronize with server-generated state
       fetchTimeline(selectedVehicle.id)
     } catch (err) {
-      console.error('Failed to append log:', err)
+      console.error(isEdit ? 'Failed to update log:' : 'Failed to append log:', err)
       // Rollback optimistic state updates on network/Sheets API error
       setTimeline(previousTimeline)
       setAnalytics(previousAnalytics)
-      alert('Failed to log service to Google Sheets. Rolling back timeline.')
+      alert(isEdit ? 'Failed to update service in Google Sheets. Rolling back timeline.' : 'Failed to log service to Google Sheets. Rolling back timeline.')
     } finally {
       setIsSaving(false)
     }
+  }
+
+  // Pre-fill log dialog in edit mode from historical event card
+  const handleEditLogClick = (log) => {
+    setInitialLogData({
+      id: log.id,
+      date: log.date,
+      component: Object.keys(DEFAULT_INTERVALS).includes(log.component) ? log.component : 'Other',
+      customComponent: Object.keys(DEFAULT_INTERVALS).includes(log.component) ? '' : log.component,
+      currentMileage: log.currentMileage,
+      cost: log.cost > 0 ? log.cost : '',
+      notes: log.notes || '',
+    })
+    setOpenLogDialog(true)
   }
 
   // Pre-fill log dialog from upcoming prediction event card shortcuts
@@ -382,13 +516,22 @@ export default function Home() {
         vehicles={vehicles}
         selectedVehicle={selectedVehicle}
         onSelectVehicle={handleSelectVehicle}
-        onOpenVehicleDialog={() => setOpenVehicleDialog(true)}
+        onOpenVehicleDialog={() => {
+          setVehicleDialogMode('create')
+          setOpenVehicleDialog(true)
+        }}
+        onOpenRenameDialog={() => {
+          setVehicleDialogMode('rename')
+          setOpenVehicleDialog(true)
+        }}
+        onOpenDeleteDialog={() => setOpenDeleteDialog(true)}
         onOpenIntervalsDialog={() => setOpenIntervalsDialog(true)}
         onOpenShareDialog={() => setOpenShareDialog(true)}
         onOpenLogDialog={() => {
           setInitialLogData(null)
           setOpenLogDialog(true)
         }}
+        onEditLog={handleEditLogClick}
         timeline={timeline}
         analytics={analytics}
         intervals={intervals}
@@ -411,8 +554,24 @@ export default function Home() {
         open={openVehicleDialog}
         onClose={() => setOpenVehicleDialog(false)}
         isSaving={isSaving}
-        onCreateVehicle={handleCreateVehicle}
+        mode={vehicleDialogMode}
+        initialName={vehicleDialogMode === 'rename' ? selectedVehicle?.name : ''}
+        onSubmit={vehicleDialogMode === 'rename' ? handleRenameVehicle : handleCreateVehicle}
         demoMode={demoMode}
+      />
+
+      <ConfirmDeleteDialog
+        open={openDeleteDialog}
+        onClose={() => setOpenDeleteDialog(false)}
+        onConfirm={handleDeleteVehicle}
+        isDeleting={isSaving}
+        itemName={selectedVehicle?.name}
+        title="Delete Vehicle Profile"
+        description={
+          demoMode
+            ? 'This vehicle and all its maintenance records will be removed from your browser demo storage.'
+            : 'This vehicle spreadsheet will be moved to your Google Drive Trash. You can restore it from Google Drive Trash if needed.'
+        }
       />
 
       <ShareDialog

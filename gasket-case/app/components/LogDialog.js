@@ -47,8 +47,11 @@ export default function LogDialog({
     }
   }, [open, initialData])
 
+  const isEdit = Boolean(initialData?.id && !initialData?.isPredictive)
+
   const handleSubmit = () => {
     onAddLog({
+      ...(isEdit ? { id: initialData.id } : {}),
       date,
       component,
       customComponent,
@@ -82,7 +85,7 @@ export default function LogDialog({
           pb: 2,
         }}
       >
-        Log Maintenance Service
+        {isEdit ? 'Edit Maintenance Service' : 'Log Maintenance Service'}
       </DialogTitle>
       <DialogContent
         sx={{
@@ -212,7 +215,18 @@ export default function LogDialog({
             },
           }}
         >
-          {isSaving ? <CircularProgress size={20} /> : 'Save Log'}
+          {isSaving ? (
+            <CircularProgress
+              size={20}
+              sx={{
+                color: 'primary.contrastText',
+              }}
+            />
+          ) : isEdit ? (
+            'Save Changes'
+          ) : (
+            'Save Log'
+          )}
         </Button>
       </DialogActions>
     </Dialog>

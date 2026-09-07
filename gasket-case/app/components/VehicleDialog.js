@@ -12,20 +12,36 @@ import {
   CircularProgress,
 } from '@mui/material'
 
-export default function VehicleDialog({ open, onClose, isSaving, onCreateVehicle, demoMode }) {
+export default function VehicleDialog({
+  open,
+  onClose,
+  isSaving,
+  onCreateVehicle,
+  onSubmit,
+  initialName = '',
+  mode = 'create',
+  demoMode,
+}) {
   const [vehicleName, setVehicleName] = useState('')
 
   useEffect(() => {
     if (open) {
-      setVehicleName('')
+      setVehicleName(initialName || '')
     }
-  }, [open])
+  }, [open, initialName])
 
   const handleSubmit = () => {
-    if (vehicleName.trim()) {
-      onCreateVehicle(vehicleName.trim())
+    const trimmed = vehicleName.trim()
+    if (!trimmed) return
+
+    if (onSubmit) {
+      onSubmit(trimmed)
+    } else if (onCreateVehicle) {
+      onCreateVehicle(trimmed)
     }
   }
+
+  const isRename = mode === 'rename'
 
   return (
     <Dialog
@@ -49,7 +65,7 @@ export default function VehicleDialog({ open, onClose, isSaving, onCreateVehicle
           pb: 2,
         }}
       >
-        Add New Vehicle Profile
+        {isRename ? 'Rename Vehicle Profile' : 'Add New Vehicle Profile'}
       </DialogTitle>
       <DialogContent
         sx={{
@@ -64,9 +80,11 @@ export default function VehicleDialog({ open, onClose, isSaving, onCreateVehicle
             lineHeight: 1.5,
           }}
         >
-          {demoMode
+          {isRename
+            ? 'Update the name of this vehicle. This will update the spreadsheet name in your GasketCase Drive folder.'
+            : demoMode
             ? 'Add a vehicle profile in your local browser sandbox.'
-            : 'GasketCase will initialize a new Google Sheet inside your Drive root directory specifically formatted for this vehicle.'}
+            : 'GasketCase will initialize a new Google Sheet inside your GasketCase Drive folder specifically formatted for this vehicle.'}
         </Typography>
         <TextField
           label="Vehicle Name (e.g. 2021 Corolla)"
@@ -93,7 +111,7 @@ export default function VehicleDialog({ open, onClose, isSaving, onCreateVehicle
         <Button
           variant="contained"
           onClick={handleSubmit}
-          disabled={isSaving || !vehicleName.trim()}
+          disabled={isSaving || !vehicleName.trim() || (isRename && vehicleName.trim() === initialName)}
           sx={{
             backgroundColor: 'primary.main',
             color: 'primary.contrastText',
@@ -102,7 +120,18 @@ export default function VehicleDialog({ open, onClose, isSaving, onCreateVehicle
             },
           }}
         >
-          {isSaving ? <CircularProgress size={20} /> : 'Create'}
+          {isSaving ? (
+            <CircularProgress
+              size={20}
+              sx={{
+                color: 'primary.contrastText',
+              }}
+            />
+          ) : isRename ? (
+            'Save Name'
+          ) : (
+            'Create'
+          )}
         </Button>
       </DialogActions>
     </Dialog>

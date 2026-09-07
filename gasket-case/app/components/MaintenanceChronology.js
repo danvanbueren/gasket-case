@@ -4,12 +4,14 @@ import React from 'react'
 import { Card, CardContent, Typography, Box, Button } from '@mui/material'
 import InfoIcon from '@mui/icons-material/Info'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
+import EditIcon from '@mui/icons-material/Edit'
 
 export default function MaintenanceChronology({
   timeline,
   analytics,
   onPredictiveLogClick,
   onOpenLogDialog,
+  onEditLog,
 }) {
   const formatCost = (value) => {
     return new Intl.NumberFormat('en-US', {
@@ -365,17 +367,51 @@ export default function MaintenanceChronology({
                                 {new Date(event.date + 'T00:00:00').toLocaleDateString(undefined, { dateStyle: 'medium' })}
                               </Typography>
                             </Box>
-                            {event.cost > 0 && (
-                              <Typography
-                                variant="subtitle2"
-                                sx={{
-                                  fontWeight: 700,
-                                  color: 'secondary.main',
-                                }}
-                              >
-                                {formatCost(event.cost)}
-                              </Typography>
-                            )}
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 2,
+                              }}
+                            >
+                              {event.cost > 0 && (
+                                <Typography
+                                  variant="subtitle2"
+                                  sx={{
+                                    fontWeight: 700,
+                                    color: 'secondary.main',
+                                  }}
+                                >
+                                  {formatCost(event.cost)}
+                                </Typography>
+                              )}
+                              {onEditLog && (
+                                <Button
+                                  variant="text"
+                                  size="small"
+                                  startIcon={
+                                    <EditIcon
+                                      sx={{
+                                        fontSize: '0.85rem',
+                                      }}
+                                    />
+                                  }
+                                  onClick={() => onEditLog(event)}
+                                  sx={{
+                                    fontSize: '0.72rem',
+                                    py: 0.25,
+                                    px: 1,
+                                    color: 'text.secondary',
+                                    '&:hover': {
+                                      color: 'primary.main',
+                                      backgroundColor: 'rgba(6, 182, 212, 0.08)',
+                                    },
+                                  }}
+                                >
+                                  Edit
+                                </Button>
+                              )}
+                            </Box>
                           </Box>
                         </Box>
                       )}

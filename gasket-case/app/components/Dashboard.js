@@ -7,6 +7,7 @@ import {
   TextField,
   MenuItem,
   Button,
+  IconButton,
   Grid,
   Typography,
   CircularProgress,
@@ -14,6 +15,8 @@ import {
 import AddIcon from '@mui/icons-material/Add'
 import SettingsIcon from '@mui/icons-material/Settings'
 import ShareIcon from '@mui/icons-material/Share'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined'
 
 import Navbar from './Navbar'
 import AnalyticsCards from './AnalyticsCards'
@@ -27,9 +30,12 @@ export default function Dashboard({
   selectedVehicle,
   onSelectVehicle,
   onOpenVehicleDialog,
+  onOpenRenameDialog,
+  onOpenDeleteDialog,
   onOpenIntervalsDialog,
   onOpenShareDialog,
   onOpenLogDialog,
+  onEditLog,
   timeline,
   analytics,
   intervals,
@@ -134,6 +140,52 @@ export default function Dashboard({
             >
               Add Vehicle
             </Button>
+            {selectedVehicle && (
+              <React.Fragment>
+                <IconButton
+                  size="small"
+                  title="Rename Vehicle"
+                  onClick={onOpenRenameDialog}
+                  sx={{
+                    color: 'text.secondary',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    p: 1,
+                    '&:hover': {
+                      color: 'primary.main',
+                      borderColor: 'primary.main',
+                      backgroundColor: 'rgba(6, 182, 212, 0.04)',
+                    },
+                  }}
+                >
+                  <EditIcon
+                    sx={{
+                      fontSize: '1rem',
+                    }}
+                  />
+                </IconButton>
+                <IconButton
+                  size="small"
+                  title="Delete Vehicle"
+                  onClick={onOpenDeleteDialog}
+                  sx={{
+                    color: 'text.secondary',
+                    border: '1px solid rgba(255, 255, 255, 0.1)',
+                    p: 1,
+                    '&:hover': {
+                      color: '#EF4444',
+                      borderColor: 'rgba(239, 68, 68, 0.4)',
+                      backgroundColor: 'rgba(239, 68, 68, 0.08)',
+                    },
+                  }}
+                >
+                  <DeleteOutlinedIcon
+                    sx={{
+                      fontSize: '1rem',
+                    }}
+                  />
+                </IconButton>
+              </React.Fragment>
+            )}
           </Box>
 
           {/* Quick Action Button cluster */}
@@ -239,6 +291,7 @@ export default function Dashboard({
                 analytics={analytics}
                 onPredictiveLogClick={onPredictiveLogClick}
                 onOpenLogDialog={onOpenLogDialog}
+                onEditLog={onEditLog}
               />
             </Grid>
 

@@ -34,8 +34,10 @@ Logic <-- "OAuth 2.0 Auth Transport" --> Storage
 ## Features
 
 -  **Chronological History**: An interactive vertical timeline displaying historical maintenance records alongside dynamically calculated future predictions.
+-  **Record & Vehicle Lifecycle Management**: Add, edit, and update historical maintenance logs with optimistic UI rendering. Rename vehicle profiles or safely delete profiles to Google Drive Trash.
 -  **Prediction Engine**: Calculates daily odometer velocity ($\Delta V$) based on your real mileage accumulation to forecast a timeline for upcoming maintenance intervals.
--  **Data Custody**: Uses scoped authorization (`drive.file` and `spreadsheets`) so the platform only sees files relating to Gasket Case. Full details available in our [Privacy Policy](PRIVACY.md) and [Terms of Service](TERMS.md).
+-  **Dedicated Drive Folder**: Automatically organizes and isolates all vehicle spreadsheets within a dedicated `GasketCase/` folder in your Google Drive.
+-  **Strict Least-Privilege Data Custody**: Uses exclusively `drive.file` scoped authorization so the application cannot view or touch any unrelated user files in Google Drive. Full details available in our [Privacy Policy](PRIVACY.md) and [Terms of Service](TERMS.md).
 -  **Google Workspace Security Sharing**: Programmatically or manually share your vehicle spreadsheets with other users using Google Drive's native sharing permissions.
 -  **Zero-Friction Guest Demo Mode**: Get a feel for the application using a browser `localStorage` sandbox without authorizing with Google.
 

@@ -294,7 +294,74 @@ export async function POST(request) {
       return Response.json({ id: newId, name })
     }
 
-    // Action 2: Share vehicle profile
+    // Action 2: Rename vehicle spreadsheet
+    if (action === 'rename_vehicle') {
+      const { name } = body
+      if (!spreadsheetId || !name) {
+        return Response.json({ error: 'Spreadsheet ID and new vehicle name are required' }, { status: 400 })
+      }
+
+      await drive.files.update({
+        fileId: spreadsheetId,
+        requestBody: {
+          name: `GasketCase_${name}`,
+        },
+      })
+
+      return Response.json({ success: true, id: spreadsheetId, name })
+    }
+
+    // Action 3: Delete vehicle spreadsheet (safely moved to Google Drive Trash)
+    if (action === 'delete_vehicle') {
+      if (!spreadsheetId) {
+        return Response.json({ error: 'Spreadsheet ID is required' }, { status: 400 })
+      }
+
+      await drive.files.update({
+        fileId: spreadsheetId,
+        requestBody: {
+          trashed: true,
+        },
+      })
+
+      return Response.json({ success: true, id: spreadsheetId })
+    }
+
+    // Action 4: Edit existing maintenance log entry
+    if (action === 'edit_log') {
+      const { id, date, component, currentMileage, cost, notes } = body
+      if (!spreadsheetId || !id || !date || !component || !currentMileage) {
+        return Response.json({ error: 'Missing required log values for update' }, { status: 400 })
+      }
+
+      // Fetch Column A IDs to locate the target row
+      const idColumn = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range: 'Sheet1!A:A',
+      })
+
+      const rows = idColumn.data.values || []
+      const rowIndex = rows.findIndex((r) => r[0] === id)
+
+      if (rowIndex === -1) {
+        return Response.json({ error: 'Log entry not found' }, { status: 404 })
+      }
+
+      const sheetRowNumber = rowIndex + 1
+
+      await sheets.spreadsheets.values.update({
+        spreadsheetId,
+        range: `Sheet1!A${sheetRowNumber}:F${sheetRowNumber}`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+          values: [[id, date, component, parseFloat(currentMileage), parseFloat(cost) || 0, notes || '']],
+        },
+      })
+
+      return Response.json({ success: true, id })
+    }
+
+    // Action 5: Share vehicle profile
     if (action === 'share_vehicle') {
       const { email } = body
       if (!spreadsheetId || !email) {
@@ -313,7 +380,7 @@ export async function POST(request) {
       return Response.json({ success: true })
     }
 
-    // Action 3: Append new maintenance log entry
+    // Action 6: Append new maintenance log entry
     const { date, component, currentMileage, cost, notes } = body
     if (!spreadsheetId || !date || !component || !currentMileage) {
       return Response.json({ error: 'Missing log values' }, { status: 400 })
