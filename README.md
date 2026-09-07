@@ -1,4 +1,4 @@
-# [Gasket Case](https://github.com/danvanbueren/gasket-case) &middot; [![License](https://img.shields.io/badge/license-all_rights_reserved-blue)](https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md) [![Privacy Policy](https://img.shields.io/badge/privacy-policy-green)](PRIVACY.md) [![Repo Size](https://img.shields.io/github/repo-size/danvanbueren/gasket-case?color=blue)](https://github.com/danvanbueren/gasket-case) [![Issues](https://img.shields.io/github/issues/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/issues) [![Last Commit](https://img.shields.io/github/last-commit/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/commits/main/)
+# [Gasket Case](https://github.com/danvanbueren/gasket-case) &middot; [![License](https://img.shields.io/badge/license-all_rights_reserved-blue)](https://github.com/danvanbueren/gasket-case/blob/main/LICENSE.md) [![Privacy Policy](https://img.shields.io/badge/privacy-policy-green)](PRIVACY.md) [![Terms of Service](https://img.shields.io/badge/terms-of_service-blue)](TERMS.md) [![Repo Size](https://img.shields.io/github/repo-size/danvanbueren/gasket-case?color=blue)](https://github.com/danvanbueren/gasket-case) [![Issues](https://img.shields.io/github/issues/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/issues) [![Last Commit](https://img.shields.io/github/last-commit/danvanbueren/gasket-case)](https://github.com/danvanbueren/gasket-case/commits/main/)
 
 A privacy-first, decentralized automotive maintenance lifecycle logging and forecasting application.
 
@@ -35,7 +35,7 @@ Logic <-- "OAuth 2.0 Auth Transport" --> Storage
 
 -  **Chronological History**: An interactive vertical timeline displaying historical maintenance records alongside dynamically calculated future predictions.
 -  **Prediction Engine**: Calculates daily odometer velocity ($\Delta V$) based on your real mileage accumulation to forecast a timeline for upcoming maintenance intervals.
--  **Data Custody**: Uses scoped authorization (`drive.file` and `spreadsheets`) so the platform only sees files relating to Gasket Case. Full details available in our [Privacy Policy](PRIVACY.md).
+-  **Data Custody**: Uses scoped authorization (`drive.file` and `spreadsheets`) so the platform only sees files relating to Gasket Case. Full details available in our [Privacy Policy](PRIVACY.md) and [Terms of Service](TERMS.md).
 -  **Google Workspace Security Sharing**: Programmatically or manually share your vehicle spreadsheets with other users using Google Drive's native sharing permissions.
 -  **Zero-Friction Guest Demo Mode**: Get a feel for the application using a browser `localStorage` sandbox without authorizing with Google.
 

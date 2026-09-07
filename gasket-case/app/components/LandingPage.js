@@ -361,6 +361,30 @@ export default function LandingPage({ onSignIn, onEnterDemoMode }) {
           >
             Privacy Policy
           </Typography>
+          <Typography
+            variant="caption"
+            sx={{
+              color: 'text.secondary',
+              opacity: 0.5,
+            }}
+          >
+            &bull;
+          </Typography>
+          <Typography
+            component={Link}
+            href="/terms"
+            variant="caption"
+            sx={{
+              color: 'text.secondary',
+              textDecoration: 'none',
+              '&:hover': {
+                color: 'primary.main',
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            Terms of Service
+          </Typography>
         </Box>
       </Box>
     </Box>
