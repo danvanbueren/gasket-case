@@ -83,3 +83,10 @@ bun  run  dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) to view the application.
+
+---
+
+## Documentation & Deployment Guides
+
+- **[DevOps & Deployment Guide](docs/devops-deployment-guide.md)**: Comprehensive, start-to-finish operational guide covering Google Cloud Console configuration, OAuth 2.0 credentials, Vercel environment variables, custom domains, and end-to-end cooperation.
+- **[Google Drive Pipeline Architecture](docs/google-drive-pipeline-plan.md)**: Technical audit, root-cause analysis, and phased architectural roadmap for the decentralized Google Drive and Sheets data pipeline.

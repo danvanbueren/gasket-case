@@ -59,28 +59,33 @@ flowchart LR
     C --> D["Phase 4: Client-Side Resilience & UX"]
 ```
 
+> [!TIP]
+> For the complete, start-to-finish operational guide covering Google Cloud Console configuration, OAuth 2.0 credentials, Vercel environment variables, custom domains, and end-to-end cooperation, see the [DevOps & Deployment Guide](devops-deployment-guide.md).
+
 ---
 
 ### Phase 1: Environment & Google Cloud Console Setup
+
+> Detailed walkthrough available in [DevOps & Deployment Guide](devops-deployment-guide.md).
 
 #### Objectives
 1. Ensure the Google Cloud project is properly configured with required APIs, scopes, and redirect URIs.
 2. Establish a standardized `.env.example` template in the codebase.
 
 #### Action Items
-- [ ] Create `gasket-case/.env.example` with the following variables:
+- [x] Create `gasket-case/.env.example` with the following variables:
   ```env
   GOOGLE_CLIENT_ID="your-client-id.apps.googleusercontent.com"
   GOOGLE_CLIENT_SECRET="GOCSPX-your-client-secret"
   NEXTAUTH_SECRET="generate-with-openssl-rand-base64-32"
   NEXTAUTH_URL="http://localhost:3000"
   ```
-- [ ] Enable APIs in GCP Console:
+- [x] Enable APIs in GCP Console:
   - Google Drive API (`drive.googleapis.com`)
   - Google Sheets API (`sheets.googleapis.com`)
-- [ ] In GCP *APIs & Services > Credentials*:
-  - Add Authorized Redirect URI: `http://localhost:3000/api/auth/callback/google`.
-- [ ] In GCP *OAuth Consent Screen*:
+- [x] In GCP *APIs & Services > Credentials*:
+  - Add Authorized Redirect URI: `http://localhost:3000/api/auth/callback/google` and production `https://gasketcase.app/api/auth/callback/google`.
+- [x] In GCP *OAuth Consent Screen*:
   - Add scopes: `.../auth/drive.file`, `openid`, `email`, `profile`.
   - Add developer/tester email addresses under **Test users**.
 
@@ -94,16 +99,16 @@ flowchart LR
 3. Configure Google OAuth2 client instances with refresh credentials.
 
 #### Action Items
-- [ ] **Extract Auth Options**:
+- [x] **Extract Auth Options**:
   - Create `gasket-case/lib/auth.js` exporting `authOptions`.
   - Update `app/api/auth/[...nextauth]/route.js` to re-export the handler using `authOptions` from `lib/auth.js`.
   - Update `app/api/timeline/route.js` to import `authOptions` from `@/lib/auth`.
-- [ ] **Implement Token Refresh Callback in `lib/auth.js`**:
+- [x] **Implement Token Refresh Callback in `lib/auth.js`**:
   - Preserve `account.refresh_token` and compute `token.expiresAt = Date.now() + account.expires_in * 1000`.
   - On subsequent calls to the `jwt` callback, if `Date.now() < token.expiresAt`, return the cached `token`.
   - If expired, execute a refresh grant request to Google OAuth token endpoint (`https://oauth2.googleapis.com/token`) to obtain a new `access_token` and update `token.expiresAt`.
   - Expose `session.accessToken` and `session.error` (e.g. `'RefreshAccessTokenError'`) to the client.
-- [ ] **Instantiate Authenticated Google Client**:
+- [x] **Instantiate Authenticated Google Client**:
   - Update `getGoogleClients` to supply `clientId` and `clientSecret`:
     ```javascript
     function getGoogleClients(accessToken, refreshToken) {
@@ -122,17 +127,7 @@ flowchart LR
     }
     ```
 
----
-
-### Phase 3: Robust Drive & Sheets API Operations
-
-#### Objectives
-1. Migrate spreadsheet creation to native Google Sheets API methods.
-2. Prevent locale-based naming errors (`Sheet1` assumption).
-3. Ensure structured error reporting.
-
-#### Action Items
-- [ ] **Migrate Vehicle Creation**:
+- [x] **Migrate Vehicle Creation**:
   - Replace `drive.files.create` in `POST /api/timeline` with `sheets.spreadsheets.create`:
     ```javascript
     const response = await sheets.spreadsheets.create({
@@ -169,10 +164,13 @@ flowchart LR
       },
     })
     ```
-- [ ] **Dynamic Sheet Title Resolution**:
+- [x] **Dynamic Sheet Title Resolution**:
   - When fetching values in `GET /api/timeline`, inspect spreadsheet metadata or use the resolved sheet name if `Sheet1` is not present, avoiding hardcoded assumptions.
-- [ ] **Proper Error Propagation**:
+- [x] **Proper Error Propagation**:
   - Differentiate between 401 (unauthorized / session expired), 403 (permissions / API disabled), 404 (file missing / deleted in Drive), and 500. Return descriptive JSON bodies.
+- [x] **Dedicated Drive Folder Organization & File Actions**:
+  - Automatically isolate spreadsheets inside a dedicated `GasketCase/` Google Drive folder.
+  - Implement maintenance record editing (`edit_log`), vehicle renaming (`rename_vehicle`), and safe deletion via Google Drive Trash (`delete_vehicle`).
 
 ---
 
